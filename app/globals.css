@@ -1,5 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap');
+
 @import 'tailwindcss';
 
+
+@import "./style/dominex.css";
 :root {
   --color-background: #ffffff;
   --color-foreground: #000000;

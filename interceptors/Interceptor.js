@@ -16,7 +16,7 @@ const fetchInterceptor = async (res, endpoint, method, data) => {
     // refresh token failed
     if (!refRes.ok) {
       useAuthStore.getState().logout();
-      window.location.href = "/login";
+      window.location.href = "/auth/login";
       return;
     }
 
@@ -37,7 +37,7 @@ const fetchInterceptor = async (res, endpoint, method, data) => {
       },
       body: data ? JSON.stringify(data) : undefined,
     });
-
+    if (!retryRes.ok) throw new Error("Request failed after token refresh");
     return retryRes.json();
   }
 
