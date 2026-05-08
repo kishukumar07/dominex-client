@@ -27,7 +27,7 @@ function LoginPage() {
       if (res.accessToken) {
         setAuth(res.data, res.accessToken);
         router.replace("/main/feed");
-      }
+      }             
     } catch (err) {
       setError(err.message || "Login failed. Please try again.");
     } finally {
@@ -85,7 +85,7 @@ function LoginPage() {
         <div className="divider">or</div>
 
         <p className="text-center text-sm text-muted">
-          Don't have an account?{" "}
+          Dont have an account? {" "}
           <Link href="/auth/register" className="link">
             Create one
           </Link>

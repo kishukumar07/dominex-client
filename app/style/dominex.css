@@ -150,11 +150,13 @@ body {
   border-radius: var(--radius-sm);
   color: var(--text-primary);
   font-family: var(--font-body);
-  font-size: 14px;
-  padding: 12px 14px;
+  /* font-size: 14px; */
+  /* padding: 12px 14px; */
   width: 100%;
   outline: none;
   transition: var(--transition);
+  padding: 9px 12px;  /* reduce from 12px 14px */
+font-size: 13px;
 }
 
 .input::placeholder {
