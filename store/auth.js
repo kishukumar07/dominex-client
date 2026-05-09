@@ -9,5 +9,6 @@ export const useAuthStore = create((set) => ({
   logout: () => set({ user: null, token: null, isLoading: false }),
 }));
 
+//usage reminder ...
 // const { setAuth } = useAuthStore.getState();
 // setAuth(res.user, res.accessToken);

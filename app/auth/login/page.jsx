@@ -24,10 +24,13 @@ function LoginPage() {
     setLoading(true);
     try {
       const res = await apiRequest("api/auth/login", "POST", { ...formData });
-      if (res.accessToken) {
-        setAuth(res.data, res.accessToken);
+
+      if (res.success) {
+        setAuth(res.user, res.accessToken);
         router.replace("/main/feed");
-      }             
+      } else {
+        setError(res.message);
+      }
     } catch (err) {
       setError(err.message || "Login failed. Please try again.");
     } finally {
@@ -85,7 +88,7 @@ function LoginPage() {
         <div className="divider">or</div>
 
         <p className="text-center text-sm text-muted">
-          Dont have an account? {" "}
+          Dont have an account?{" "}
           <Link href="/auth/register" className="link">
             Create one
           </Link>

@@ -7,8 +7,8 @@ import { useRouter } from "next/navigation";
 
 function RegisterPage() {
   const router = useRouter();
-  //STATES ...
 
+  //STATES ...
   const [Error, setError] = useState("");
   const [Loading, setLoading] = useState(false);
   const [FormData, setFormData] = useState({
@@ -20,7 +20,6 @@ function RegisterPage() {
   });
 
   //FUNCTIONS ..
-
   const changeHandler = (key, value) => {
     setFormData({ ...FormData, [key]: value });
   };
@@ -34,6 +33,7 @@ function RegisterPage() {
       });
 
       if (res.success) {
+        //=> Register → verify OTP → redirect to /auth/login → user logs in → /main/feed
         router.push(`/auth/verify?userId=${res.data._id}`);
       } else {
         setError(res.message);
