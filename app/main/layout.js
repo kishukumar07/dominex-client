@@ -1,7 +1,11 @@
-import ProtectedRoute from "@/components/ProtectedRoute";
 import React from "react";
+import ProtectedRoute from "@/components/ProtectedRoute";
+import Navbar from "@/components/navbar/navbar";
+
 
 // Current page = children -> react default pass children{parameter}
 export default function MainLayout({ children }) {
-  return <ProtectedRoute>{children}</ProtectedRoute>;
+  return <ProtectedRoute>
+    <Navbar/>
+    {children}</ProtectedRoute>;
 }
