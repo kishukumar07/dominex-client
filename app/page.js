@@ -1,16 +1,19 @@
-import Image from "next/image";
+import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 
+export default async function Home() {
+  const cookieStore = await cookies();
+  const hasToken = cookieStore.get("token");
 
-export default function Home() {
-  return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <Image
-        src="/logo.png"
-        alt="Dominex Logo"
-        width={120}
-        height={120}
-      />
-      <h1 className="text-2xl font-bold mt-4">Dominex</h1>
-    </div>
-  );
+  if (hasToken) {
+   
+    redirect("/main/feed");
+  } else {
+   
+    redirect("/auth/login");
+  }
 }
+
+
+
+

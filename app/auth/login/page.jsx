@@ -6,17 +6,15 @@ import { useAuthStore } from "@/store/auth";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-const { setAuth } = useAuthStore.getState();
-
 function LoginPage() {
   const router = useRouter();
+  const { setAuth } = useAuthStore();
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const changeHandler = (key, value) => {
     setFormData({ ...formData, [key]: value });
-    setError("");
   };
 
   const handleSubmit = async (e) => {

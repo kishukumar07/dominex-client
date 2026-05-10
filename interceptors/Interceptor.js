@@ -6,10 +6,15 @@ import { useAuthStore } from "@/store/auth";
 const BASE_URL = process.env.NEXT_PUBLIC_SERVER_BASE_URL;
 
 const fetchInterceptor = async (res, endpoint, method, data) => {
+  
+  // skip interception for auth routes
+  if (endpoint.includes("auth")) {
+    return res.json();
+  }
   // access token expired
   if (res.status === 401) {
     const refRes = await fetch(`${BASE_URL}/api/auth/refresh`, {
-      method: "GET",
+      method: "POST",
       credentials: "include",
     });
 
