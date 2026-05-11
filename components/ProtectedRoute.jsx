@@ -14,7 +14,7 @@ function ProtectedRoute({ children }) {
       try {
         const res = await apiRequest("api/auth/refresh", "POST");
         if (res.success) {
-          setAuth(res.user, res.accessToken); // ← add this
+          setAuth(res.user, res.accessToken);
         } else {
           logout();
         }
