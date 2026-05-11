@@ -1,6 +1,6 @@
 # Dominex Frontend
 
-Frontend of Dominex — a modern full-stack social media platform inspired by Instagram/Github/Linkedin and real-time communication apps{Teligram}.
+Frontend of Dominex — a modern full-stack social media platform inspired by Instagram/Github/Linkedin and real-time communication apps{Telegram}.
 
 Built with Next.js 14, Zustand, Tailwind CSS, Socket.io-client, and modern authentication architecture.
 
