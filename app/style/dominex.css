@@ -478,7 +478,7 @@ body {
   justify-content: space-between;
   padding: 0 20px;
   height: 56px;
-  background: #111111;
+  background: #0b0b0b;
   border-bottom: 0.5px solid #2a2a2a;
   width: 100%;
 }
@@ -489,11 +489,7 @@ body {
   align-items: center;
   gap: 10px;
 }
-.nav-center {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
+
 .nav-right {
   display: flex;
   align-items: center;
@@ -515,7 +511,7 @@ body {
   background: transparent;
   border: none;
   cursor: pointer;
-  padding: 7px 8px;
+  padding: 5px 6px;
   border-radius: 6px;
   color: #888;
 }
@@ -525,7 +521,9 @@ body {
 }
 .nav-btn svg,
 .nav-btn i {
-  font-size: 18px;
+  font-size: 14px;
+  width: 16px;
+  height: 16px;
 }
 
 /* ── Search box ── */
@@ -533,10 +531,10 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-  background: #1a1a1a;
+  background: transparent;
   border: 0.5px solid #2a2a2a;
   border-radius: 6px;
-  padding: 6px 12px;
+  padding: 5px 10px;
   font-size: 12px;
   color: #888;
   cursor: pointer;
@@ -554,7 +552,12 @@ body {
   color: #888;
   font-family: inherit;
 }
-
+.search-box svg,
+.search-box i {
+  font-size: 14px;
+  width: 16px;
+  height: 16px;
+}
 /* ── Button groups (copilot + create) ── */
 .btn-group {
   display: flex;
