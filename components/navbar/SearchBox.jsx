@@ -1,18 +1,9 @@
-import React from "react";
-import { Search } from "lucide-react";
+import React from 'react'
 
 function SearchBox() {
   return (
-    <div className="search-box">
-      <Search />
-
-      <span>Type</span>
-
-      <kbd>/</kbd>
-
-      <span>to search</span>
-    </div>
-  );
+    <div>SearchBox</div>
+  )
 }
 
-export default SearchBox;
+export default SearchBox
