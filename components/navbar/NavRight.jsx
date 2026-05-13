@@ -13,7 +13,7 @@ import {
   Bell,
 } from "lucide-react";
 
-function NavRight() {
+function NavRight({onAvatarClick}) {
  
 
   return (
@@ -37,7 +37,7 @@ function NavRight() {
 
       <div className="nav-divider"></div>
       <ActionIcon icon={<Bell />} title="Open user navigation Menu" />
-      <AvatarButton />
+      <AvatarButton onClick={onAvatarClick} />
     </div>
   );
 }
