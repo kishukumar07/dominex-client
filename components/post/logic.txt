@@ -1,0 +1,42 @@
+app/(main)/feed/
+  page.jsx           ← only this
+
+components/post/
+  ┌─────────────────────────────────────┐
+  │  [story] [story] [story] [story]    │  ← FeedSlider (horizontal scroll)
+  └─────────────────────────────────────┘
+  ┌────┐ ┌────┐ ┌────┐ ┌────┐
+  │post│ │post│ │post│ │post│           ← FeedGrid
+  └────┘ └────┘ └────┘ └────┘
+  FeedCard.jsx
+  FeedHeader.jsx
+  FeedImage.jsx
+  FeedContent.jsx
+  FeedActions.jsx
+  PostViewer.jsx
+  ViewerSidebar.jsx
+  CommentSection.jsx
+  CommentItem.jsx
+  CommentInput.jsx
+  ReactionBar.jsx
+  PostStats.jsx
+
+
+
+Reusable post components in post/
+
+FeedCard
+→ used in:
+   • feed
+   • profile
+   • explore
+   • saved posts
+
+PostViewer
+→ used in:
+   • feed click
+   • direct post route
+   • profile post click
+
+CommentSection
+→ shared everywhere post opens

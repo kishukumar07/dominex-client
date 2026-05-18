@@ -7,7 +7,8 @@ function FeedPage() {
   const authData = useAuthStore();
 
   console.log(authData);
-  
+ 
+
   return <div>feedPage</div>;
 }
 

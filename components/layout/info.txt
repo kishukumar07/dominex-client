@@ -1,0 +1,15 @@
+Purpose:
+
+common spacing
+max-width
+padding
+responsive structure
+page alignment
+
+
+eg ...
+<MainContainer>
+   <FeedGrid />
+</MainContainer>
+
+If don’t need reusable wrappers yet, can remove components/layout/ for now.

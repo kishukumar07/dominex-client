@@ -72,7 +72,7 @@ const section2 = [
   },
 ];
 
-function AvatarDropdown({ onClose,isOpen }) {
+function AvatarDropdown({ onClose, isOpen }) {
   const { user } = useAuthStore();
   const ref = useRef();
 
@@ -90,9 +90,12 @@ function AvatarDropdown({ onClose,isOpen }) {
     <div className="avatar-dropdown" ref={ref}>
       {/* Section 0 — user info */}
       <div className="dropdown-user">
-        <div className="avatar" style={{ width: 36, height: 36, fontSize: 13 }}>
+        <img src={user.profilePic} alt="Profile" className="avatar" />
+        {/* Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  */}
+
+        {/* <div className="avatar" style={{ width: 36, height: 36, fontSize: 13 }}>
           KK
-        </div>
+        </div> */}
         <div>
           <p className="font-semibold" style={{ fontSize: 13 }}>
             {user?.username || "kishukumar07"}
