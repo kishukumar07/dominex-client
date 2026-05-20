@@ -1,0 +1,139 @@
+/* app/(main)/feed/feed.css */
+
+/* ── Feed page wrapper ── */
+.feed-page {
+  height: calc(100vh - 56px);
+  overflow-y: auto;
+  background: var(--bg);
+}
+
+/* ── Slider ── */
+.feed-slider {
+  display: flex;
+  gap: 10px;
+  padding: 12px 16px;
+  overflow-x: auto;
+  border-bottom: 1px solid var(--border);
+  scrollbar-width: none;
+  background: var(--bg-card);
+}
+
+.feed-slider::-webkit-scrollbar {
+  display: none;
+}
+
+.slider-card {
+  flex-shrink: 0;
+  width: 160px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.slider-card:hover {
+  border-color: #3a3a3a;
+  transform: translateY(-2px);
+}
+
+/* ── Feed Grid ── */
+.feed-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  padding: 16px;
+}
+
+/* ── Feed Card ── */
+.feed-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.feed-card:hover {
+  border-color: #3a3a3a;
+  transform: translateY(-2px);
+}
+
+/* ── Feed Card Header ── */
+.feed-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+}
+
+/* ── Feed Card Image ── */
+.feed-card-image img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  display: block;
+}
+
+/* ── Feed Card Content ── */
+.feed-card-content {
+  padding: 10px 12px;
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ── Feed Card Actions ── */
+.feed-card-actions {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-top: 1px solid var(--border);
+}
+
+.feed-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  font-size: 11px;
+  padding: 4px 6px;
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
+  font-family: var(--font-body);
+}
+
+.feed-action-btn:hover {
+  color: var(--text-primary);
+  background: var(--bg-input);
+}
+
+/* ── Responsive ── */
+@media (max-width: 1200px) {
+  .feed-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .feed-grid {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 10px;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .feed-grid {
+    grid-template-columns: 1fr;
+  }
+}
