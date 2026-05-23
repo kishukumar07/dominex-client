@@ -6,9 +6,9 @@ import FeedActions from "./FeedActions";
 
 function FeedCard({ post, onClick }) {
   return (
-    <div className="feed-card" onClick={() => onClick(post._id)}>
-      <FeedImage src={post.photo} alt={post.title} />
+    <div className="feed-card" onClick={() => onClick(post)}>
       <FeedHeader author={post.author} createdAt={post.createdAt} />
+      <FeedImage src={post.photo} alt={post.title} />
       <FeedContent caption={post.title} />
       <FeedActions likes={post.likes} postId={post._id} />
     </div>
