@@ -5,7 +5,7 @@ import CommentInput from "./CommentInput";
 import { apiRequest } from "@/lib/api";
 import { useAuthStore } from "@/store/auth";
 
-function CommentSection({ comments = [], postId }) {
+function CommentSection({ comments = [], postId, postAuthorId }) {
   const [localComments, setLocalComments] = useState(
     comments.filter((c) => c && c._id),
   );
@@ -39,6 +39,7 @@ function CommentSection({ comments = [], postId }) {
       console.error("Failed to add comment", err);
     }
   };
+
   return (
     <div className="comment-section">
       <div className="comment-list">
@@ -55,7 +56,16 @@ function CommentSection({ comments = [], postId }) {
           </p>
         ) : (
           localComments.map((comment) => (
-            <CommentItem key={comment._id} comment={comment} />
+            <CommentItem
+              key={comment._id}
+              comment={comment}
+              postAuthorId={postAuthorId}
+              onDelete={(deletedId) =>
+                setLocalComments((prev) =>
+                  prev.filter((c) => c._id !== deletedId),
+                )
+              }
+            />
           ))
         )}
       </div>

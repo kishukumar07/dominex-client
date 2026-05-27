@@ -17,9 +17,13 @@ function ViewerSidebar({ post }) {
 
       <div className="viewer-sidebar-divider" />
 
-      {console.log(post)}
+      {/* {console.log("post  : " + JSON.stringify(post, null, 2)) } */}
 
-      <CommentSection comments={post.comments || []} postId={post._id} />
+      <CommentSection
+        comments={post.comments || []}
+        postId={post._id}
+        postAuthorId={post?.author?._id}
+      />
     </div>
   );
 }

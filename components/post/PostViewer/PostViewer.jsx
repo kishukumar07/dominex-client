@@ -70,7 +70,7 @@ function PostViewer({ post, onClose }) {
         <ViewerSidebar post={post} />
 
         {/* Close button */}
-        <button className = "viewer-close" onClick={onClose} title="Close">
+        <button className="viewer-close" onClick={onClose} title="Close">
           <X size={18} />
         </button>
       </div>

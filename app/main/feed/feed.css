@@ -478,3 +478,35 @@
 .comment-menu-delete:hover {
   background: rgba(255, 68, 68, 0.08);
 }
+
+.comment-menu-confirm {
+  padding: 8px 12px;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.comment-menu-actions {
+  display: flex;
+  gap: 6px;
+  padding: 6px 12px;
+}
+
+.comment-menu-yes {
+  background: var(--danger);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 4px 10px;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.comment-menu-no {
+  background: var(--bg-input);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 4px 10px;
+  font-size: 11px;
+  cursor: pointer;
+}

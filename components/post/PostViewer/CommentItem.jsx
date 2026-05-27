@@ -23,14 +23,28 @@ function Avatar({ name }) {
   return <div className="comment-avatar">{initials}</div>;
 }
 
-function CommentItem({ comment, isSubComment = false }) {
+function CommentItem({
+  comment,
+  isSubComment = false,
+  postAuthorId,
+  onDelete,
+}) {
+  // console.log(comment);
   const [showSubs, setShowSubs] = useState(false);
   const [showReply, setShowReply] = useState(false);
   const [replyText, setReplyText] = useState("");
-  const [menuOpen, setMenuOpen] = useState(false);
   const [localSubs, setLocalSubs] = useState(comment.allSubComments || []);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [confirmDelete, setconfirmDelete] = useState(false);
 
   const hasSubs = localSubs.length > 0;
+  const { user } = useAuthStore.getState();
+
+  const isOwnComment = comment.author?._id === user?._id;
+  const isPostAuthor = postAuthorId === user?._id; // passed postAuthorId as prop
+  const canDelete = isOwnComment || isPostAuthor;
+  const canEdit = isOwnComment;
+  const showMenu = canDelete || canEdit;
 
   const handleReply = async (e) => {
     e.preventDefault();
@@ -41,7 +55,6 @@ function CommentItem({ comment, isSubComment = false }) {
       });
 
       if (res.success) {
-        const { user } = useAuthStore.getState();
         const newReply = {
           _id: res.data._id,
           content: res.data.content,
@@ -65,13 +78,23 @@ function CommentItem({ comment, isSubComment = false }) {
   };
 
   const handleDelete = async () => {
+    const previousSubs = localSubs;
+
+    onDelete?.(comment._id);
+    setMenuOpen(false);
+    setconfirmDelete(false);
+
     try {
       await apiRequest(`comments/${comment._id}`, "DELETE");
       // TODO: remove from parent list
     } catch (err) {
       console.error("Failed to delete", err);
+      //Featured : ->
+      // If this is a sub-comment, roll back the parent's localSubs
+      // by calling a separate onDeleteFailed callback, or simpler:
+      // re-add via onDelete inverse — but easiest is just a rollback prop.
+      // For now, at minimum log and optionally show a toast.
     }
-    setMenuOpen(false);
   };
 
   return (
@@ -88,26 +111,59 @@ function CommentItem({ comment, isSubComment = false }) {
             <span className="comment-time">{timeAgo(comment.createdAt)}</span>
 
             {/* three dots */}
-            <div style={{ position: "relative", marginLeft: "auto" }}>
-              <button
-                className="nav-btn"
-                onClick={() => setMenuOpen((p) => !p)}
-                style={{ padding: "2px 4px" }}
-              >
-                <MoreHorizontal size={14} />
-              </button>
-              {menuOpen && (
-                <div className="comment-menu">
-                  <button className="comment-menu-item">Edit</button>
-                  <button
-                    className="comment-menu-item comment-menu-delete"
-                    onClick={handleDelete}
-                  >
-                    Delete
-                  </button>
-                </div>
-              )}
-            </div>
+            {/* three dots — only show if allowed */}
+            {showMenu && (
+              <div style={{ position: "relative", marginLeft: "auto" }}>
+                <button
+                  className="nav-btn"
+                  onClick={() => {
+                    setMenuOpen((p) => !p);
+                    setconfirmDelete(false);
+                  }}
+                  style={{ padding: "2px 4px" }}
+                >
+                  <MoreHorizontal size={14} />
+                </button>
+
+                {menuOpen && (
+                  <div className="comment-menu">
+                    {!confirmDelete ? (
+                      <>
+                        {canEdit && (
+                          <button className="comment-menu-item">Edit</button>
+                        )}
+                        {canDelete && (
+                          <button
+                            className="comment-menu-item comment-menu-delete"
+                            onClick={() => setconfirmDelete(true)}
+                          >
+                            Delete
+                          </button>
+                        )}
+                      </>
+                    ) : (
+                      <>
+                        <p className="comment-menu-confirm">Sure?</p>
+                        <div className="comment-menu-actions">
+                          <button
+                            className="comment-menu-yes"
+                            onClick={handleDelete}
+                          >
+                            Yes
+                          </button>
+                          <button
+                            className="comment-menu-no"
+                            onClick={() => setconfirmDelete(false)}
+                          >
+                            No
+                          </button>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
           </div>
 
           {/* content */}
@@ -184,7 +240,15 @@ function CommentItem({ comment, isSubComment = false }) {
       {showSubs && hasSubs && (
         <div style={{ borderLeft: "1px solid var(--border)", marginLeft: 20 }}>
           {localSubs.map((sub) => (
-            <CommentItem key={sub._id} comment={sub} isSubComment={true} />
+            <CommentItem
+              key={sub._id}
+              comment={sub}
+              isSubComment={true}
+              postAuthorId={postAuthorId}
+              onDelete={(deletedId) =>
+                setLocalSubs((prev) => prev.filter((s) => s._id !== deletedId))
+              }
+            />
           ))}
         </div>
       )}
