@@ -1,4 +1,4 @@
-// components/post/FeedCard.jsx
+"use client";
 import FeedHeader from "./FeedHeader";
 import FeedImage from "./FeedImage";
 import FeedContent from "./FeedContent";
@@ -10,10 +10,12 @@ function FeedCard({ post, onClick }) {
       <FeedHeader author={post.author} createdAt={post.createdAt} />
       <FeedImage src={post.photo} alt={post.title} />
       <FeedContent caption={post.title} />
-      <FeedActions likes={post.likes} postId={post._id} />
+      <FeedActions
+        postId={post._id}
+        likes={post.likes}
+        onClick={(e) => e.stopPropagation()} // ← stop card click when clicking actions
+      />
     </div>
-
-    //i need to change this as insta -> yt
   );
 }
 
