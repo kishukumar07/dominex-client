@@ -4,28 +4,24 @@ import { MoreHorizontal } from "lucide-react"; // <->
 import timeAgo from "@/lib/timeAgo";
 
 function FeedHeader({ author, createdAt }) {
-  const initials = author?.name
-    ?.split(" ")
-    .map((n) => n[0])
-    .join("")
-    .toUpperCase()
-    .slice(0, 2);
+  //   const initials = author?.name
+  //   ?.split(" ")
+  //   .map((n) => n[0])
+  //   .join("")
+  //   .toUpperCase()
+  //   .slice(0, 2);
+  // console.log(author);
 
   return (
     <div className="feed-card-header">
       <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-        <div
-          className="avatar avatar-sm"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: 11,
-            fontWeight: 600,
-          }}
-        >
-          {initials}
-        </div>
+        {
+          <img
+            src={author?.profilePic}
+            alt="author Profile"
+            className="avatar"
+          />
+        }
         <div>
           <p
             style={{

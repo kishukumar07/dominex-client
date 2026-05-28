@@ -1,4 +1,13 @@
 function ReactionBar({ likes = [] }) {
+  // "likes": [
+  //   {
+  //     "_id": "69fed95fd38a08f36b426a5e",
+  //     "name": "ritinKumar",
+  //     "username": "ritn_07",
+  //     "profilePic": "https://img.icons8.com/?size=100&id=tZuAOUGm9AuS&format=png&color=000000"
+  //   },{}.{}.{} ...n times for diff authors...
+  // ]
+  console.log(likes);
   const colors = [
     "#CECBF6",
     "#9FE1CB",
@@ -7,6 +16,7 @@ function ReactionBar({ likes = [] }) {
     "#FAC775",
     "#F4C0D1",
   ];
+
   const textColors = [
     "#3C3489",
     "#085041",
@@ -16,16 +26,16 @@ function ReactionBar({ likes = [] }) {
     "#72243E",
   ];
 
-  const displayLikes = likes.slice(0, 8);
+  const displayLikes = likes.slice(0, 8); //need desc order _> a liked it should be at top
 
   return (
     <div className="reaction-bar">
       <p className="reaction-title">Reactions</p>
       <div className="reaction-avatars">
         {displayLikes.length > 0 ? (
-          displayLikes.map((userId, i) => (
+          displayLikes.map((author, i) => (
             <div
-              key={userId}
+              key={author._id}
               className="reaction-avatar"
               style={{
                 background: colors[i % colors.length],
@@ -34,7 +44,8 @@ function ReactionBar({ likes = [] }) {
                 zIndex: displayLikes.length - i,
               }}
             >
-              {userId.slice(0, 2).toUpperCase()}
+              <img src={author?.profilePic} alt="author Profile" />
+              {/* future onclick here open that user profile .*/}
             </div>
           ))
         ) : (

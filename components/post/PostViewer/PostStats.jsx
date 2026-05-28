@@ -7,7 +7,9 @@ import { apiRequest } from "@/lib/api";
 export function PostStats({ likes = [], comments = 0, postId }) {
   const { user } = useAuthStore();
 
-  const [isLiked, setIsLiked] = useState(likes.includes(user?._id));
+  const [isLiked, setIsLiked] = useState(
+    likes.some((like) => like._id === user?._id),
+  );
   const [likeCount, setLikeCount] = useState(likes.length);
 
   const handleLike = async (e) => {
@@ -22,6 +24,20 @@ export function PostStats({ likes = [], comments = 0, postId }) {
       setLikeCount((p) => (isLiked ? p + 1 : p - 1));
     }
   };
+  {
+    /*
+    
+    post."likes": [
+      {
+        "_id": "69fed95fd38a08f36b426a5e",
+        "name": "ritinKumar",
+        "username": "ritn_07",
+        "profilePic": "https://img.icons8.com/?size=100&id=tZuAOUGm9AuS&format=png&color=000000"
+      },{}.{}.{} ...n times ... 
+    ], 
+  
+    */
+  }
 
   return (
     <div className="post-stats">

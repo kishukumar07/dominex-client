@@ -23,23 +23,13 @@ function PostViewer({ post, onClose }) {
           <img src={post.photo} alt={post.title} className="viewer-img" />
           <div className="viewer-caption">
             <div className="viewer-caption-author">
-              <div
-                className="avatar avatar-sm"
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: 11,
-                  fontWeight: 600,
-                }}
-              >
-                {post.author?.name
-                  ?.split(" ")
-                  .map((n) => n[0])
-                  .join("")
-                  .toUpperCase()
-                  .slice(0, 2)}
-              </div>
+              {
+                <img
+                  src={post?.author?.profilePic}
+                  alt="author Profile"
+                  className="avatar"
+                />
+              }
               <div>
                 <p
                   style={{
@@ -65,10 +55,9 @@ function PostViewer({ post, onClose }) {
             <p className="viewer-caption-text">{post.title}</p>
           </div>
         </div>
-
+        {/* {console.log(post)} */}
         {/* RIGHT — reactions + comments */}
         <ViewerSidebar post={post} />
-
         {/* Close button */}
         <button className="viewer-close" onClick={onClose} title="Close">
           <X size={18} />
