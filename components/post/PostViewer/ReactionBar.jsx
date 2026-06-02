@@ -44,7 +44,11 @@ function ReactionBar({ likes = [] }) {
                 zIndex: displayLikes.length - i,
               }}
             >
-              <img src={author?.profilePic} alt="author Profile" />
+              <img
+                src={author?.profilePic}
+                alt="author Profile"
+                className="reaction-avatar "
+              />
               {/* future onclick here open that user profile .*/}
             </div>
           ))

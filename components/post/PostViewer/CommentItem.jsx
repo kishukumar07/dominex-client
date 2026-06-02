@@ -3,15 +3,7 @@ import { useState } from "react";
 import { ChevronDown, ChevronUp, MoreHorizontal, Send } from "lucide-react";
 import { apiRequest } from "@/lib/api";
 import { useAuthStore } from "@/store/auth";
-
-function timeAgo(dateStr) {
-  const diff = Date.now() - new Date(dateStr).getTime();
-  const mins = Math.floor(diff / 60000);
-  if (mins < 60) return `${mins}m`;
-  const hrs = Math.floor(mins / 60);
-  if (hrs < 24) return `${hrs}h`;
-  return `${Math.floor(hrs / 24)}d`;
-}
+import timeAgo from "@/lib/timeAgo";
 
 function Avatar({ name }) {
   const initials = name
@@ -36,6 +28,8 @@ function CommentItem({
   const [localSubs, setLocalSubs] = useState(comment.allSubComments || []);
   const [menuOpen, setMenuOpen] = useState(false);
   const [confirmDelete, setconfirmDelete] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editText, setEditText] = useState(comment.content);
 
   const hasSubs = localSubs.length > 0;
   const { user } = useAuthStore.getState();
@@ -53,7 +47,6 @@ function CommentItem({
       const res = await apiRequest(`comments/${comment._id}/reply`, "POST", {
         content: replyText.trim(),
       });
-
       if (res.success) {
         const newReply = {
           _id: res.data._id,
@@ -79,11 +72,9 @@ function CommentItem({
 
   const handleDelete = async () => {
     const previousSubs = localSubs;
-
     onDelete?.(comment._id);
     setMenuOpen(false);
     setconfirmDelete(false);
-
     try {
       await apiRequest(`comments/${comment._id}`, "DELETE");
       // TODO: remove from parent list
@@ -94,6 +85,21 @@ function CommentItem({
       // by calling a separate onDeleteFailed callback, or simpler:
       // re-add via onDelete inverse — but easiest is just a rollback prop.
       // For now, at minimum log and optionally show a toast.
+    }
+  };
+
+  const handleEdit = async (e) => {
+    e.preventDefault();
+    if (!editText.trim()) return;
+    try {
+      const res = await apiRequest(`comments/${comment._id}`, "PATCH", {
+        content: editText.trim(),
+      });
+      if (res.success) {
+        setIsEditing(false);
+      }
+    } catch (err) {
+      console.error("Failed to edit", err);
     }
   };
 
@@ -110,7 +116,6 @@ function CommentItem({
             </span>
             <span className="comment-time">{timeAgo(comment.createdAt)}</span>
 
-            {/* three dots */}
             {/* three dots — only show if allowed */}
             {showMenu && (
               <div style={{ position: "relative", marginLeft: "auto" }}>
@@ -130,7 +135,15 @@ function CommentItem({
                     {!confirmDelete ? (
                       <>
                         {canEdit && (
-                          <button className="comment-menu-item">Edit</button>
+                          <button
+                            className="comment-menu-item"
+                            onClick={() => {
+                              setIsEditing(true);
+                              setMenuOpen(false);
+                            }}
+                          >
+                            Edit
+                          </button>
                         )}
                         {canDelete && (
                           <button
@@ -167,7 +180,44 @@ function CommentItem({
           </div>
 
           {/* content */}
-          <p className="comment-text">{comment.content}</p>
+          {isEditing ? (
+            <form
+              onSubmit={handleEdit}
+              style={{ display: "flex", gap: 6, marginTop: 4 }}
+            >
+              <input
+                className="comment-input"
+                value={editText}
+                onChange={(e) => setEditText(e.target.value)}
+                autoFocus
+              />
+              <button
+                className="comment-submit"
+                type="submit"
+                disabled={!editText.trim()}
+              >
+                <Send size={13} />
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setIsEditing(false);
+                  setEditText(comment.content);
+                }}
+                style={{
+                  background: "transparent",
+                  border: "none",
+                  cursor: "pointer",
+                  color: "var(--text-muted)",
+                  fontSize: 11,
+                }}
+              >
+                Cancel
+              </button>
+            </form>
+          ) : (
+            <p className="comment-text">{editText}</p>
+          )}
 
           {/* action row */}
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>

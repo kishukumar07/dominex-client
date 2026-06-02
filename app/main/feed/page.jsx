@@ -68,7 +68,9 @@ export default function FeedPage() {
 
   return (
     <div className="feed-page">
-      <FeedSlider />
+      {/* <FeedSlider /> */}
+      {/* Peinding Todo... */}
+
       <FeedGrid posts={posts} onPostClick={handlePostClick} />
       {postLoading && (
         <div className="viewer-overlay">

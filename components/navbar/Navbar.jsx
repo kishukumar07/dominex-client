@@ -15,9 +15,7 @@ function Navbar() {
       <nav className="nav">
         <NavLeft onHamburgerClick={() => setSidebarOpen(true)} />
         <NavRight
-          
           onAvatarClick={() => setDropdownOpen((prev) => !prev)}
-
           dropdownOpen={dropdownOpen}
           setDropdownOpen={setDropdownOpen}
         />
@@ -32,8 +30,9 @@ function Navbar() {
       {/* Avatar dropdown */}
       {dropdownOpen && (
         <AvatarDropdown
-         isOpen={dropdownOpen}
-         onClose ={() => setDropdownOpen(false)} />
+          isOpen={dropdownOpen}
+          onClose={() => setDropdownOpen(false)}
+        />
       )}
     </>
   );

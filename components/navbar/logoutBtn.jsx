@@ -16,7 +16,11 @@ function LogoutBtn() {
     }
   };
 
-  return <button className="btn btn-ghost" onClick={handelLogout}>Logout</button>;
+  return (
+    <button className="btn btn-ghost" onClick={handelLogout}>
+      Logout
+    </button>
+  );
 }
 
 export default LogoutBtn;

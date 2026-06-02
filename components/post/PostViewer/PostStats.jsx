@@ -24,6 +24,7 @@ export function PostStats({ likes = [], comments = 0, postId }) {
       setLikeCount((p) => (isLiked ? p + 1 : p - 1));
     }
   };
+
   {
     /*
     
