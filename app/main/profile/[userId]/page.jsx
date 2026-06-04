@@ -41,7 +41,10 @@ function ProfilePage() {
 
   // calculate after profile loads
   const initialIsFollowing =
-    profile?.followers?.includes(currentUser?._id) || false;
+    profile?.followers?.some((follower) => follower._id === currentUser?._id) ||
+    false;
+
+  // console.log("initialFollowings", initialIsFollowing);
 
   const handlePostClick = async (post) => {
     setPostLoading(true);

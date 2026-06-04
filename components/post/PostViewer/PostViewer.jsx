@@ -3,8 +3,10 @@
 import { useEffect } from "react";
 import { X } from "lucide-react";
 import ViewerSidebar from "./ViewerSidebar";
+import { useRouter } from "next/navigation";
 
 function PostViewer({ post, onClose }) {
+  const router = useRouter();
   useEffect(() => {
     const handler = (e) => {
       if (e.key === "Escape") onClose();
@@ -28,6 +30,9 @@ function PostViewer({ post, onClose }) {
                   src={post?.author?.profilePic}
                   alt="author Profile"
                   className="avatar"
+                  onClick={() => {
+                    router.push(`/main/profile/${post?.author?._id}`);
+                  }}
                 />
               }
               <div>

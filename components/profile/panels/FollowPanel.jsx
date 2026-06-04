@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 function FollowPanel({ type, user, onClose }) {
   // followers and followings come from user object already fetched
 
-  console.log("user from universe");
   console.log(type, user);
 
   const list =
@@ -37,7 +36,6 @@ function FollowPanel({ type, user, onClose }) {
                 .toUpperCase()
                 .slice(0, 2);
               return (
-                // onclick ->redirecting /profile with id ...
                 <div
                   key={person._id || i}
                   className="follow-panel-item"

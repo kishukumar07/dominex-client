@@ -3,13 +3,23 @@ import { useState } from "react";
 import { Pencil } from "lucide-react";
 import { useAuthStore } from "@/store/auth";
 import { apiRequest } from "@/lib/api";
+import { useEffect } from "react";
 
 function ProfileHeader({ user, initialIsFollowing = false, onFollowChange }) {
   const { user: currentUser } = useAuthStore();
-  const [isFollowing, setIsFollowing] = useState(initialIsFollowing);
+  const [isFollowing, setIsFollowing] = useState(null);
+
+  useEffect(() => {
+    function followingPreCheck() {
+      setIsFollowing(initialIsFollowing);
+    }
+    followingPreCheck();
+  }, [initialIsFollowing]);
+
+  // console.log("initialFollowings", initialIsFollowing);
+  // console.log("isFollowing", isFollowing);
 
   if (!user) return <div className="profile-skeleton" />;
-
   const isOwnProfile = currentUser?._id === user._id;
 
   const initials = user.name
@@ -21,10 +31,10 @@ function ProfileHeader({ user, initialIsFollowing = false, onFollowChange }) {
 
   const handleFollow = async () => {
     try {
-      const endpoint = isFollowing
-        ? `follow/unfollow/${user._id}`
-        : `follow/${user._id}`;
-      const res = await apiRequest(endpoint, "POST");
+      const endpoint = isFollowing ? `follow/unfollow/` : `follow/follow/`;
+      const res = await apiRequest(endpoint, "POST", {
+        targetUserId: user._id,
+      }); //instant follower following cout request bug : fix needed
       if (res.success) {
         setIsFollowing((p) => !p);
         if (onFollowChange) onFollowChange();
@@ -59,6 +69,7 @@ function ProfileHeader({ user, initialIsFollowing = false, onFollowChange }) {
             <button className="btn-edit-profile">
               <Pencil size={13} />
               Edit profile
+              {/* need to work here pending item # */}
             </button>
           ) : (
             <button
