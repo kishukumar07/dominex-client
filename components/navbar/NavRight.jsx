@@ -13,21 +13,21 @@ import {
   Bell,
 } from "lucide-react";
 
-function NavRight({onAvatarClick}) {
- 
-
+function NavRight({ onAvatarClick, onCreateClick }) {
   return (
     <div className="nav-right">
-   
-        <SearchBox />
-        <ButtonGroup>
-          <ActionIcon icon={<Bot />} title="AI Assistant" />
-          <ActionIcon icon={<ChevronDown />} title="AI Options" />
-        </ButtonGroup>
-     
+      <SearchBox />
+      <ButtonGroup>
+        <ActionIcon icon={<Bot />} title="AI Assistant" />
+        <ActionIcon icon={<ChevronDown />} title="AI Options" />
+      </ButtonGroup>
 
       <ButtonGroup>
-        <ActionIcon icon={<Plus />} title="Crete new..." />{" "}
+        <ActionIcon
+          icon={<Plus />}
+          title="Crete new..."
+          onClick={onCreateClick}
+        />{" "}
         <ActionIcon icon={<ChevronDown />} title="Create options" />{" "}
       </ButtonGroup>
       <div className="nav-divider"></div>

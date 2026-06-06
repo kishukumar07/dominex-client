@@ -7,14 +7,19 @@ import { useState, useRef } from "react";
 import HamburgerPanel from "./HamburgerPanel";
 import AvatarDropdown from "./AvatarDropdown";
 
+import CreatePostModal from "../post/CreatePost/CreatePostModal";
+
 function Navbar() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [createOpen, setCreateOpen] = useState(null); //"plus"
+
   return (
     <>
       <nav className="nav">
         <NavLeft onHamburgerClick={() => setSidebarOpen(true)} />
         <NavRight
+          onCreateClick={() => setCreateOpen("plus")}
           onAvatarClick={() => setDropdownOpen((prev) => !prev)}
           dropdownOpen={dropdownOpen}
           setDropdownOpen={setDropdownOpen}
@@ -26,6 +31,17 @@ function Navbar() {
         isOpen={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
       />
+
+      {/* // render modal */}
+      {createOpen === "plus" && (
+        <CreatePostModal
+          onClose={() => setCreateOpen(null)}
+          onSuccess={() => {
+            setCreateOpen(null);
+            // optionally refetch feed
+          }}
+        />
+      )}
 
       {/* Avatar dropdown */}
       {dropdownOpen && (
