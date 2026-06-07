@@ -115,7 +115,11 @@ function ProfilePage() {
       {/* {console.log(panel)} */}
       {activeTab == "posts" && (
         <div className="feed-page">
-          <FeedGrid posts={posts} onPostClick={handlePostClick} />
+          <FeedGrid
+            posts={posts}
+            onPostClick={handlePostClick}
+            isOwnProfile={true}
+          />
           {postLoading && (
             <div className="viewer-overlay">
               <p style={{ color: "#fff" }}>Loading...</p>
