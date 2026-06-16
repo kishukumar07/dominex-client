@@ -1,24 +1,24 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { apiRequest } from "@/lib/api";
-import { useSearchParams } from "next/navigation";
-import { useRouter } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 
-function VerifyEmailPage() {
+// main component logic
+function VerifyEmailContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  //state
+  // state
   const userId = searchParams.get("userId");
   const [VerifyData, setVerifyData] = useState({
-    userId,
+    userId: userId || "", // Fallback to safe empty string if undefined at initial render
     otp: "",
   });
   const [Error, setError] = useState("");
   const [Loading, setLoading] = useState(false);
 
-  //func.
+  // func.
   const changeHandler = (key, value) => {
     setVerifyData({ ...VerifyData, [key]: value });
   };
@@ -36,8 +36,8 @@ function VerifyEmailPage() {
     try {
       const res = await apiRequest("api/auth/verifyOtp", "POST", VerifyData);
       if (res.success) {
-             alert("Email Verified Please Enter Your Credintials.")
-              router.push("/auth/login"); // BigComp.: !automation
+        alert("Email Verified Please Enter Your Credentials.");
+        router.push("/auth/login");
       } else {
         setError(res.message);
       }
@@ -90,13 +90,18 @@ function VerifyEmailPage() {
             {Loading ? "Verifying..." : "Verify"}
           </button>
         </form>
-
-        {/* <div className="divider">or</div> */}
-        {/* // separate button, calls register API again with same email
-          // or a dedicated /auth/resend-otp endpoint */}
       </div>
     </div>
   );
 }
 
-export default VerifyEmailPage;
+// Exporting the component wrapped in a Suspense boundary
+export default function VerifyEmailPage() {
+  return (
+    <Suspense
+      fallback={<div className="page-center">Loading verification...</div>}
+    >
+      <VerifyEmailContent />
+    </Suspense>
+  );
+}
