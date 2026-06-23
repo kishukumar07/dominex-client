@@ -46,6 +46,11 @@ function ProfilePage() {
 
   // console.log("initialFollowings", initialIsFollowing);
 
+  //for delete icon purpose ...
+  // console.log(currentUser._id ==userId);
+  // console.log(userId);
+  const isOwnProfile = currentUser._id == userId;
+
   const handlePostClick = async (post) => {
     setPostLoading(true);
     try {
@@ -118,7 +123,7 @@ function ProfilePage() {
           <FeedGrid
             posts={posts}
             onPostClick={handlePostClick}
-            isOwnProfile={true}
+            isOwnProfile={isOwnProfile} //here i need to check ifOwnProfile
           />
           {postLoading && (
             <div className="viewer-overlay">
