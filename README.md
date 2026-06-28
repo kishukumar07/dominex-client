@@ -93,13 +93,15 @@ public/           # static assets
 
 ## Screenshots
 
-> Replace these placeholders with actual screenshots when available.
+![Feed view](screenshots/Screenshot 2026-06-28 203948.png)
 
-- `screenshots\Screenshot 2026-06-28 203948.png`
-- `screenshots\Screenshot 2026-06-28 203918.png`
-- `screenshots\Screenshot 2026-06-28 204130.png`
-- `screenshots\Screenshot 2026-06-28 204205.png`
-- `screenshots\Screenshot 2026-06-28 204235.png`
+![Post viewer modal](screenshots/Screenshot 2026-06-28 203918.png)
+
+![Profile page](screenshots/Screenshot 2026-06-28 204130.png)
+
+![Create post modal](screenshots/Screenshot 2026-06-28 204205.png)
+
+![AI assistant / sidebar](screenshots/Screenshot 2026-06-28 204235.png)
 
 ## Contributing
 
