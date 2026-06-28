@@ -34,7 +34,7 @@ Designed as an Instagram-style feed for developers, Dominex prioritizes session 
 - Optimistic like toggling for responsive interaction
 - Full profile page with follow/unfollow actions and overlay panels
 - CreatePostModal with multipart `FormData` image upload
-- AI assistant integration with switchable Gemini / OpenAI support 
+- AI assistant integration with switchable Gemini / OpenAI support
 - Refreshable auth interceptor to keep sessions active seamlessly
 
 ## Getting Started
@@ -93,13 +93,15 @@ public/           # static assets
 
 ## Screenshots
 
-> Replace these placeholders with actual screenshots when available.
+![Register](screenshots/Screenshot%202026-06-28%20203948.png)
 
-- `screenshots\Screenshot 2026-06-28 203948.png`
-- `screenshots\Screenshot 2026-06-28 203918.png`
-- `screenshots\Screenshot 2026-06-28 204130.png`
-- `screenshots\Screenshot 2026-06-28 204205.png`
-- `screenshots\Screenshot 2026-06-28 204235.png`
+![Login](screenshots/Screenshot%202026-06-28%20203918.png)
+
+![Post view](screenshots/Screenshot%202026-06-28%20204130.png)
+
+![post modal](screenshots/Screenshot%202026-06-28%20204205.png)
+
+![Profile page](screenshots/Screenshot%202026-06-28%20204235.png)
 
 ## Contributing
 
