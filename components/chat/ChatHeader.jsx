@@ -1,0 +1,1 @@
+//ChatHeader at top of Chat Window {avtar + name + online/typing{featured...} }
