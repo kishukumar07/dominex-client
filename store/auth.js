@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { resetSocket } from "@/lib/socket";
 
 export const useAuthStore = create((set) => ({
   user: null,
@@ -7,7 +8,10 @@ export const useAuthStore = create((set) => ({
   //isLoading = true means "user is yet not logged in may be in process of it ..  show isloading .... ui "
 
   setAuth: (user, token) => set({ user, token, isLoading: false }),
-  logout: () => set({ user: null, token: null, isLoading: false }),
+  logout: () => {
+    resetSocket();
+    set({ user: null, token: null, isLoading: false });
+  },
   setLoading: (val) => set({ isLoading: val }),
 }));
 

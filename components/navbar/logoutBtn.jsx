@@ -7,7 +7,7 @@ function LogoutBtn() {
   const { logout } = useAuthStore();
   const router = useRouter();
 
-  const handelLogout = async () => {
+  const handleLogout = async () => {
     try {
       await apiRequest("api/auth/logout", "POST");
     } finally {
@@ -17,7 +17,7 @@ function LogoutBtn() {
   };
 
   return (
-    <button className="btn btn-ghost" onClick={handelLogout}>
+    <button className="btn btn-ghost" onClick={handleLogout}>
       Logout
     </button>
   );
