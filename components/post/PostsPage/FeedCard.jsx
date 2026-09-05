@@ -8,6 +8,8 @@ import { useState } from "react";
 import { apiRequest } from "@/lib/api";
 
 function FeedCard({ post, onClick, isOwnProfile = false, onDelete }) {
+  
+  
   const [confirmDelete, setConfirmDelete] = useState(false);
 
   const handleDelete = async (e) => {
@@ -34,7 +36,7 @@ function FeedCard({ post, onClick, isOwnProfile = false, onDelete }) {
       {/* delete button — only on own profile */}
       {isOwnProfile && (
         <div
-          style={{ position: "absolute", top: 8, right: 8 }}
+          className="feed-card-delete"
           onClick={(e) => e.stopPropagation()}
         >
           {!confirmDelete ? (

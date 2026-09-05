@@ -48,6 +48,7 @@
 
 /* ── Feed Card ── */
 .feed-card {
+  position: relative;
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
@@ -59,6 +60,21 @@
 .feed-card:hover {
   border-color: #3a3a3a;
   transform: translateY(-2px);
+}
+
+.feed-card-delete {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s ease, visibility 0.15s ease;
+}
+
+.feed-card:hover .feed-card-delete,
+.feed-card-delete:focus-within {
+  opacity: 1;
+  visibility: visible;
 }
 
 /* ── Feed Card Header ── */

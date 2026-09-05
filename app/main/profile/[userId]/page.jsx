@@ -122,8 +122,8 @@ function ProfilePage() {
         <div className="feed-page">
           <FeedGrid
             posts={posts}
-            onPostClick={handlePostClick}
-            isOwnProfile={isOwnProfile} //here i need to check ifOwnProfile
+            onPostClick = {handlePostClick}
+            isOwnProfile = {isOwnProfile} //checked if OwnProfile - completed this part already ... 
           />
           {postLoading && (
             <div className="viewer-overlay">
