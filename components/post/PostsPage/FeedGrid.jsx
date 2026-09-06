@@ -1,18 +1,10 @@
 // components/post/FeedGrid.jsx
 import FeedCard from "./FeedCard";
-import { useState, useEffect } from "react";
-function FeedGrid({ posts = [], onPostClick, isOwnProfile = false }) {
-  const [localPosts, setLocalPosts] = useState([]);
 
-  useEffect(() => {
-    setLocalPosts(Array.isArray(posts) ? posts : []);
-  }, [posts]);
+function FeedGrid({ posts = [], onPostClick, isOwnProfile = false,  handleDelete }) {
 
-  const handleDelete = (postId) => {
-    setLocalPosts((prev) => prev.filter((p) => p._id !== postId));
-  };
 
-  if (!localPosts.length) {
+  if (!posts.length) {
     return (
       <div
         style={{
@@ -28,7 +20,7 @@ function FeedGrid({ posts = [], onPostClick, isOwnProfile = false }) {
 
   return (
     <div className="feed-grid">
-      {localPosts.map((post) => (
+      {posts.map((post) => (
         <FeedCard
           key={post._id}
           post={post}

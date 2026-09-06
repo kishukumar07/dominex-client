@@ -8,14 +8,14 @@ import { useState } from "react";
 import { apiRequest } from "@/lib/api";
 
 function FeedCard({ post, onClick, isOwnProfile = false, onDelete }) {
-  
-  
   const [confirmDelete, setConfirmDelete] = useState(false);
 
   const handleDelete = async (e) => {
     e.stopPropagation();
     try {
+      //deleting from backend 
       const res = await apiRequest(`posts/${post._id}`, "DELETE");
+      //and filtering the deleted post for parent component state ,post # rerendering ...
       if (res.success && onDelete) onDelete(post._id);
     } catch (err) {
       console.error(err);
@@ -35,10 +35,7 @@ function FeedCard({ post, onClick, isOwnProfile = false, onDelete }) {
 
       {/* delete button — only on own profile */}
       {isOwnProfile && (
-        <div
-          className="feed-card-delete"
-          onClick={(e) => e.stopPropagation()}
-        >
+        <div className="feed-card-delete" onClick={(e) => e.stopPropagation()}>
           {!confirmDelete ? (
             <button
               className="nav-btn"

@@ -18,7 +18,7 @@ import FollowPanel from "@/components/profile/panels/FollowPanel";
 
 function ProfilePage() {
   const [profile, setProfile] = useState(null);
-  const [posts, setPosts] = useState({});
+  const [posts, setPosts] = useState([]);
   const [activeTab, setActiveTab] = useState("posts");
   const [isFollowing, setIsFollowing] = useState(false);
   const { userId } = useParams();
@@ -51,6 +51,7 @@ function ProfilePage() {
   // console.log(userId);
   const isOwnProfile = currentUser._id == userId;
 
+  //fetch clicked post data
   const handlePostClick = async (post) => {
     setPostLoading(true);
     try {
@@ -63,6 +64,15 @@ function ProfilePage() {
     } finally {
       setPostLoading(false);
     }
+  };
+
+  //on deleting one authorized post , here im just filtering the deleted post via data  this function is invocked from Feedcard.jsx{this includes the backend stuffs } ...
+  const handleDelete = (postId) => {
+    // here i have to apply fillter on : =>   Posts state and
+    //if state got updated it will cause rerender => this will again trigger - nextComponent with new data ...
+    setPosts((currentPosts) =>
+      currentPosts.filter((post) => post._id !== postId),
+    );
   };
 
   useEffect(() => {
@@ -122,8 +132,10 @@ function ProfilePage() {
         <div className="feed-page">
           <FeedGrid
             posts={posts}
-            onPostClick = {handlePostClick}
-            isOwnProfile = {isOwnProfile} //checked if OwnProfile - completed this part already ... 
+            onPostClick={handlePostClick}
+            isOwnProfile={isOwnProfile} //checked if OwnProfile - completed this part already ...
+            handleDelete={handleDelete}
+            //need to add handeldelete  fun...
           />
           {postLoading && (
             <div className="viewer-overlay">

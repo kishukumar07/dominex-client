@@ -1,5 +1,5 @@
 "use client";
-
+//this component s !  using data or related to state-posts of profile page component...
 import { useState, useEffect } from "react";
 import { apiRequest } from "@/lib/api";
 import { mockFeedData } from "./data";
@@ -7,6 +7,7 @@ import FeedSlider from "@/components/post/PostsPage/FeedSlider";
 import FeedGrid from "@/components/post/PostsPage/FeedGrid";
 import "./feed.css";
 import PostViewer from "@/components/post/PostViewer/PostViewer";
+
 
 export default function FeedPage() {
   const [posts, setPosts] = useState([]);
