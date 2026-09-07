@@ -16,18 +16,29 @@ import ProfileContributions from "@/components/profile/tabs/contributions";
 import ProfilePulse from "@/components/profile/tabs/pulse";
 import FollowPanel from "@/components/profile/panels/FollowPanel";
 
+import EditProfile from "@/components/profile/EditProfile";
+
 function ProfilePage() {
   const [profile, setProfile] = useState(null);
   const [posts, setPosts] = useState([]);
+
   const [activeTab, setActiveTab] = useState("posts");
   const [isFollowing, setIsFollowing] = useState(false);
+
   const { userId } = useParams();
 
-  //Integrated ...
+  //Integration of postCard ...
   const [postLoading, setPostLoading] = useState(false);
   const [selectedPost, setSelectedPost] = useState(null);
 
   const [panel, setPanel] = useState(null); // null | "followers" | "following"
+
+  //Integration of editProfile model
+  const [showEditModel, setShowEditModel] = useState(false); //# for conditional rendering ...
+
+  /* // This will log 'false' initially, and 'true' whenever the state updates */
+
+  console.log("Current showEditModel state:", showEditModel);
 
   //ontabchange => handeler
   const onTabChange = (tab) => {
@@ -38,7 +49,6 @@ function ProfilePage() {
 
   // get currentUser for isFollowing check
   const { user: currentUser } = useAuthStore();
-
   // calculate after profile loads
   const initialIsFollowing =
     profile?.followers?.some((follower) => follower._id === currentUser?._id) ||
@@ -102,6 +112,7 @@ function ProfilePage() {
   // console.log(profile);
   return (
     <div className=".profile-page">
+      {/* pass props to the profileHeader component setShowEditModel */}
       <ProfileHeader
         user={profile}
         initialIsFollowing={initialIsFollowing}
@@ -111,14 +122,22 @@ function ProfilePage() {
             if (res.success) setProfile(res.data);
           });
         }}
+        openEditModel={() => {
+          setShowEditModel(true);
+        }}
       />
+
+      {/*  */}
+
       <ProfileStats
         user={profile}
         postsCount={posts.length}
         onFollowersClick={() => setPanel("followers")}
         onFollowingClick={() => setPanel("following")}
       />
-      {/* // render panel */}
+
+      {/*  render panel */}
+
       {panel && (
         <FollowPanel
           type={panel}
@@ -168,6 +187,10 @@ function ProfilePage() {
         // </h1>
         <ProfilePulse />
       )}
+
+      {/* conditional rendering : EditModel */}
+
+      {showEditModel && <EditProfile onClose={() => setShowEditModel(false)} />}
     </div>
   );
 }
