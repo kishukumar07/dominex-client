@@ -5,7 +5,12 @@ import { useAuthStore } from "@/store/auth";
 import { apiRequest } from "@/lib/api";
 import { useEffect } from "react";
 
-function ProfileHeader({ user, initialIsFollowing = false, onFollowChange }) {
+function ProfileHeader({
+  user,
+  initialIsFollowing = false,
+  onFollowChange,
+  openEditModel,
+}) {
   const { user: currentUser } = useAuthStore();
   const [isFollowing, setIsFollowing] = useState(null);
 
@@ -66,10 +71,11 @@ function ProfileHeader({ user, initialIsFollowing = false, onFollowChange }) {
           </div>
 
           {isOwnProfile ? (
-            <button className="btn-edit-profile">
+            <button className="btn-edit-profile" onClick={openEditModel}>  
               <Pencil size={13} />
               Edit profile
               {/* need to work here pending item # */}
+              {/* onclick a absolute div should open this will c */}
             </button>
           ) : (
             <button
