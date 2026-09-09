@@ -41,6 +41,7 @@ function ProfilePage() {
   console.log("Current showEditModel state:", showEditModel);
 
   //ontabchange => handeler
+  //ontabchange => handeler
   const onTabChange = (tab) => {
     // console.log(tab);
     setSelectedPost(null);
@@ -190,7 +191,7 @@ function ProfilePage() {
 
       {/* conditional rendering : EditModel */}
 
-      {showEditModel && <EditProfile onClose={() => setShowEditModel(false)} />}
+      {showEditModel && <EditProfile onClose={() => setShowEditModel(false)} profileData = {profile} setProfile={setProfile} />}
     </div>
   );
 }
