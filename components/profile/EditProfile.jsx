@@ -1,6 +1,7 @@
 import React from "react";
 import { useRef, useState } from "react";
 import { apiRequest } from "@/lib/api";
+import { useAuthStore } from "@/store/auth";
 
 function EditProfile({ onClose, profileData, setProfile }) {
   const [profilePic, SetProfilePic] = useState(null);
@@ -21,18 +22,12 @@ function EditProfile({ onClose, profileData, setProfile }) {
     websiteUrl: `${profileData?.websiteUrl || ""}`,
   });
 
-  
- 
-
   const [isSubmitLoading, setSubmitLoading] = useState(false);
-
-
 
   const changeHandler = (field, value) => {
     setFormData({ ...formData, [field]: value });
   };
 
-//need : crossverify the be api controller logic : sepration of image needed ...
   const handleProfileChange = (e) => {
     const file = e.target.files[0]; //i am here ...
     if (!file) return;
@@ -40,8 +35,7 @@ function EditProfile({ onClose, profileData, setProfile }) {
     const previewProfileUrl = URL.createObjectURL(file);
     setProfilePreview(previewProfileUrl); //turant nai hona hai update thoda load lega then be ka response aane par ui update
   };
-  
-  //need to create be api and connect to this 
+
   const handleBannerChange = (e) => {
     const file = e.target.files[0]; //dalte ke saath turant change ho ja rha hai ...
     if (!file) return;
@@ -50,41 +44,86 @@ function EditProfile({ onClose, profileData, setProfile }) {
     setbannerPicPreview(previewbannerUrl);
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await handleTextSubmit();
-    if (profilePic || bannerPic) {
-      await handleImageSubmit();
+
+    try {
+      setSubmitLoading(true);
+
+      await handleTextSubmit();
+
+      if (profilePic || bannerPic) {
+        await handleImageSubmit();
+      }
+
+      if (onClose) onClose();
+    } finally {
+      setSubmitLoading(false);
     }
   };
 
+  //test baki hai ...
   const handleImageSubmit = async () => {
-    //need to edit this section ...
-    // e.preventDefault();
-    const data = new FormData();
-
     // Images
     if (profilePic) {
-      data.append("profilePic", profilePic);
+      const formData = new FormData();
+      formData.append("profile", profilePic);
+
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}users/${useAuthStore.getState().user._id}/profile/image`,
+        {
+          method: "PATCH",
+          credentials: "include",
+          headers: {
+            Authorization: `Bearer ${useAuthStore.getState().token}`,
+          },
+          body: formData,
+        },
+      );
+
+      const data = await res.json();
+
+      if (data.success) {
+        setProfilePreview(data.picUrl);
+
+        if (setProfile) {
+          setProfile((prev) => ({
+            ...prev,
+            profilePic: data.picUrl,
+          }));
+        }
+      }
     }
 
     if (bannerPic) {
-      data.append("bannerPic", bannerPic);
+      const formData = new FormData();
+      formData.append("banner", bannerPic);
+
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}users/${useAuthStore.getState().user._id}/profile/banner`,
+        {
+          method: "PATCH",
+          credentials: "include",
+          headers: {
+            Authorization: `Bearer ${useAuthStore.getState().token}`,
+          },
+          body: formData,
+        },
+      );
+
+      const data = await res.json();
+
+      if (data.success) {
+        setbannerPicPreview(data.picUrl);
+
+        if (setProfile) {
+          setProfile((prev) => ({
+            ...prev,
+            bannerPic: data.picUrl,
+          }));
+        }
+      }
     }
-
-    // DEMO
-    console.log("Data ready to send:");
-    console.log(formData);
-    console.log(profilePic);
-    console.log(bannerPic);
-
-    // Example:
-    //
-    // await fetch("/api/profile", {
-    //   method: "PUT",
-    //   body: data
-    // });
 
     onClose();
   };
@@ -120,8 +159,6 @@ function EditProfile({ onClose, profileData, setProfile }) {
         </header>
 
         <main>
-
-
           {/* Cover - image - > url */}
           <div>
             <img src={profilePreview} alt="" />
@@ -209,4 +246,3 @@ function EditProfile({ onClose, profileData, setProfile }) {
   );
 }
 export default EditProfile;
-
