@@ -71,11 +71,11 @@ function CreatePostModal({ onClose, onSuccess }) {
     if (!title.trim()) return setError("Title is required.");
     setLoading(true);
     setError("");
-    try {
+    try {    
       const formData = new FormData();
       formData.append("file", file); // key must match backend multer field name
       formData.append("title", title.trim());
-
+    
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}posts/`,
         {
