@@ -1,3 +1,4 @@
+import "./EditProfile.css";
 import React from "react";
 import { useRef, useState } from "react";
 import { apiRequest } from "@/lib/api";
@@ -161,35 +162,35 @@ function EditProfile({ onClose, profileData, setProfile }) {
         <main>
           {/* Cover - image - > url */}
           <div>
-            <img src={profilePreview} alt="" />
-            <button onClick={() => profileInputRef.current.click()}>
+            <img src={bannerPicPreview} alt="" />
+            <button onClick={() => bannerInputRef.current.click()}>
               {" "}
               Change Cover{" "}
             </button>
 
-            <input
-              ref={profileInputRef}
-              type="file"
-              accept="image/*"
-              hidden
-              onChange={handleProfileChange}
-            />
-          </div>
-
-          {/* Avatar  image -> url */}
-
-          <div>
-            <img src={bannerPicPreview} alt="" />
-            <button onClick={() => bannerInputRef.current.click()}>
-              {" "}
-              Change Photo{" "}
-            </button>
             <input
               ref={bannerInputRef}
               type="file"
               accept="image/*"
               hidden
               onChange={handleBannerChange}
+            />
+          </div>
+
+          {/* Avatar  image -> url */}
+
+          <div>
+            <img src={profilePreview} alt="" />
+            <button onClick={() => profileInputRef.current.click()}>
+              {" "}
+              Change Photo{" "}
+            </button>
+            <input
+              ref={profileInputRef}
+              type="file"
+              accept="image/*"
+              hidden
+              onChange={handleProfileChange}
             />
           </div>
 
