@@ -16,7 +16,8 @@ const sections = [
     {
       icon: <MessageSquare size={16} />,
       label: "Discussions",
-      href: "/main/discussions",
+      // href: "/main/discussions",
+      href: "/main/chat",
     },
     { icon: <Bot size={16} />, label: "Assistant", href: "/main/bot" },
   ],

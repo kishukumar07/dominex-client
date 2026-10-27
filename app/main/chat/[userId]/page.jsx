@@ -5,3 +5,17 @@ Import :
 
 
 */
+"use client";
+
+import React from "react";
+import { useParams } from "next/navigation";
+import ChatWindow from "@/components/chat/ChatWindow";
+
+export default function ChatPage() {
+  const params = useParams();
+  const userId = params?.userId;
+
+  if (!userId) return null;
+
+  return <ChatWindow userId={userId} />;
+}
