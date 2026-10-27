@@ -1,1 +1,0 @@
-//left sidebar : shows the people user chated with 
