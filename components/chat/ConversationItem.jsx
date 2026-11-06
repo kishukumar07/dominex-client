@@ -1,4 +1,3 @@
-//single item of conversationList...
 "use client";
 
 import React from "react";
@@ -22,60 +21,56 @@ export default function ConversationItem({ conversation }) {
   return (
     <div
       onClick={handleClick}
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: "12px",
-        padding: "10px 12px",
-        marginBottom: "4px",
-        borderRadius: "10px",
-        cursor: "pointer",
-        backgroundColor: isActive ? "#192534" : "transparent",
-        borderLeft: isActive ? "4px solid #84cc16" : "4px solid transparent",
-        borderBottom: isActive ? "none" : "1px solid rgba(30, 41, 59, 0.5)",
-        transition: "background-color 0.15s ease",
-      }}
+      className={`flex items-center gap-3.5 px-4 py-3.5 rounded-xl cursor-pointer transition-all duration-150 border-l-4 ${
+        isActive
+          ? "bg-[#192534] border-lime-400 shadow-sm"
+          : "bg-transparent border-transparent border-b border-slate-800/40 hover:bg-[#131b2e]/70"
+      }`}
     >
       {/* Avatar */}
-      <div style={{ position: "relative", flexShrink: 0 }}>
+      <div className="relative shrink-0">
         <img
           src={participant.avatar || "/avatar.png"}
           alt={participant.name}
-          style={{ width: "46px", height: "46px", borderRadius: "50%", objectFit: "cover", display: "block" }}
+          className="w-12 h-12 rounded-full object-cover block bg-slate-800"
         />
+        {participant.isOnline && (
+          <span className="absolute bottom-0 right-0 w-3 h-3 bg-lime-400 border-2 border-[#0b0f19] rounded-full" />
+        )}
       </div>
 
       {/* Info & Last Message */}
-      <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "4px" }}>
-          <h4 style={{ fontWeight: "600", fontSize: "14px", color: "#f1f5f9", margin: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-            {participant.name}
-          </h4>
-          <span style={{ fontSize: "11px", color: "#94a3b8", flexShrink: 0 }}>
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center justify-between mb-1">
+          <div className="flex items-center gap-1.5 truncate">
+            <h4 className="font-semibold text-[15px] text-slate-100 truncate">
+              {participant.name}
+            </h4>
+            {participant.username && (
+              <span className="text-xs text-slate-500 truncate">
+                {participant.username}
+              </span>
+            )}
+          </div>
+          <span className="text-xs text-slate-400 shrink-0 ml-2">
             {conversation.time || "10:24 PM"}
           </span>
         </div>
 
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <div className="flex items-center justify-between">
           <p
-            style={{
-              fontSize: "12px",
-              margin: 0,
-              color: conversation.isTyping ? "#94a3b8" : "#94a3b8",
-              fontStyle: conversation.isTyping ? "italic" : "normal",
-              whiteSpace: "nowrap",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-            }}
+            className={`text-[13px] text-slate-400 truncate ${
+              conversation.isTyping ? "italic text-slate-300" : "not-italic"
+            }`}
           >
             {conversation.isTyping ? "Typing..." : conversation.lastMessage || "Say hello..."}
           </p>
 
           {/* Green Unread Dot OR Blue Double Checkmark */}
           {conversation.unread ? (
-            <span style={{ width: "10px", height: "10px", backgroundColor: "#84cc16", borderRadius: "50%", flexShrink: 0, marginLeft: "8px" }} />
+            <span className="w-2.5 h-2.5 bg-lime-400 rounded-full shrink-0 ml-3" />
           ) : conversation.readReceipt ? (
-            <span style={{ fontSize: "11px", color: "#38bdf8", fontWeight: "bold", flexShrink: 0, marginLeft: "8px", letterSpacing: "-2px" }}>
+            <span className="text-xs text-sky-400 font-bold shrink-0 ml-3 tracking-tighter">
               ✓✓
             </span>
           ) : null}

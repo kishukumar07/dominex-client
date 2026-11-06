@@ -3,46 +3,37 @@
 
 import React from "react";
 
+const WAVEFORM_BARS = [
+  "h-1.5", "h-3", "h-2", "h-4", "h-5", "h-2.5", "h-4", "h-6", "h-4", "h-3",
+  "h-1.5", "h-3.5", "h-5", "h-4", "h-2.5", "h-1.5", "h-3.5", "h-4", "h-2.5", "h-1.5"
+];
+
 export default function MessageBubble({ message, currentUserId }) {
   const senderId = message.sender?._id || message.sender || message.senderId;
   const isOwn = senderId === currentUserId;
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
+    <div className="flex flex-col w-full">
       {/* Center "Today" Pill Badge */}
       {message.showDateBadge && (
-        <div
-          style={{
-            alignSelf: "center",
-            margin: "8px 0 16px 0",
-            padding: "4px 16px",
-            backgroundColor: "#162032",
-            color: "#94a3b8",
-            fontSize: "12px",
-            borderRadius: "9999px",
-          }}
-        >
+        <div className="self-center mt-2 mb-4 px-4 py-1 bg-[#162032] text-slate-400 text-xs rounded-full">
           {message.dateBadgeLabel || "Today"}
         </div>
       )}
 
       <div
-        style={{
-          display: "flex",
-          alignItems: "flex-start",
-          justifyContent: isOwn ? "flex-end" : "flex-start",
-          gap: "10px",
-          width: "100%",
-        }}
+        className={`flex items-start gap-2.5 w-full ${
+          isOwn ? "justify-end" : "justify-start"
+        }`}
       >
         {/* Receiver Small Avatar */}
         {!isOwn && (
-          <div style={{ width: "34px", flexShrink: 0 }}>
+          <div className="w-8 shrink-0">
             {!message.hideAvatar && (
               <img
                 src={message.senderAvatar || "https://i.pravatar.cc/150?u=albus"}
                 alt="avatar"
-                style={{ width: "34px", height: "34px", borderRadius: "50%", objectFit: "cover", display: "block" }}
+                className="w-8 h-8 rounded-full object-cover block"
               />
             )}
           </div>
@@ -50,92 +41,63 @@ export default function MessageBubble({ message, currentUserId }) {
 
         {/* Bubble Box */}
         <div
-          style={{
-            maxWidth: "360px",
-            backgroundColor: isOwn ? "#1a2b49" : "#162032",
-            color: "#f1f5f9",
-            borderRadius: "14px",
-            padding: "10px 14px",
-            boxShadow: "0 2px 6px rgba(0,0,0,0.25)",
-          }}
+          className={`max-w-[360px] rounded-2xl px-3.5 py-2.5 text-slate-100 shadow-md ${
+            isOwn ? "bg-[#1a2b49]" : "bg-[#162032]"
+          }`}
         >
           {/* Text Content */}
           {message.text && (
-            <p style={{ margin: 0, fontSize: "13.5px", lineHeight: "1.45", whiteSpace: "pre-wrap", wordBreak: "break-word" }}>
+            <p className="m-0 text-[13.5px] leading-snug whitespace-pre-wrap break-words">
               {message.text}
             </p>
           )}
 
           {/* Rich Link / Image Card Preview */}
           {message.mediaCard && (
-            <div style={{ marginTop: "8px", borderRadius: "10px", overflow: "hidden", backgroundColor: "#fce7f3" }}>
+            <div className="mt-2 rounded-xl overflow-hidden bg-pink-100">
               <img
                 src={message.mediaCard.image}
                 alt="Preview"
-                style={{ width: "100%", height: "170px", objectFit: "cover", display: "block" }}
+                className="w-full h-44 object-cover block"
               />
             </div>
           )}
 
           {message.mediaCard?.title && (
-            <div style={{ marginTop: "8px", fontWeight: "600", fontSize: "13.5px", color: "#f8fafc" }}>
+            <div className="mt-2 font-semibold text-[13.5px] text-slate-50">
               {message.mediaCard.title}
             </div>
           )}
 
           {/* Audio / Voice Note Waveform */}
           {message.isAudio && (
-            <div style={{ display: "flex", alignItems: "center", gap: "12px", minWidth: "230px", padding: "2px 0" }}>
+            <div className="flex items-center gap-3 min-w-[230px] py-0.5">
               <button
                 type="button"
-                style={{
-                  width: "30px",
-                  height: "30px",
-                  borderRadius: "50%",
-                  backgroundColor: "transparent",
-                  border: "none",
-                  color: "#f8fafc",
-                  fontSize: "16px",
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
+                className="w-7 h-7 rounded-full bg-transparent text-slate-50 text-base cursor-pointer flex items-center justify-center hover:text-lime-400 transition-colors"
               >
                 ▶
               </button>
-              <div style={{ display: "flex", alignItems: "center", gap: "3px", flex: 1, height: "24px" }}>
-                {[6, 12, 8, 18, 22, 10, 16, 24, 18, 12, 6, 14, 20, 16, 10, 6, 14, 18, 10, 6].map((h, i) => (
+              <div className="flex items-center gap-1 flex-1 h-6">
+                {WAVEFORM_BARS.map((heightClass, i) => (
                   <span
                     key={i}
-                    style={{
-                      height: `${h}px`,
-                      width: "2.5px",
-                      backgroundColor: "#64748b",
-                      borderRadius: "2px",
-                      display: "inline-block",
-                    }}
+                    className={`${heightClass} w-0.5 bg-slate-500 rounded-full inline-block`}
                   />
                 ))}
               </div>
-              <span style={{ fontSize: "11px", color: "#94a3b8" }}>0:12</span>
+              <span className="text-[11px] text-slate-400">0:12</span>
             </div>
           )}
 
           {/* Time & Read Checkmark */}
           <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: isOwn ? "flex-end" : "flex-start",
-              gap: "4px",
-              fontSize: "10.5px",
-              color: "#64748b",
-              marginTop: "4px",
-            }}
+            className={`flex items-center gap-1 text-[10.5px] text-slate-500 mt-1 ${
+              isOwn ? "justify-end" : "justify-start"
+            }`}
           >
             <span>{message.time || "4:32 PM"}</span>
-            {isOwn && <span style={{ color: "#38bdf8", fontWeight: "bold", letterSpacing: "-2px" }}>✓✓</span>}
+            {isOwn && <span className="text-sky-400 font-bold tracking-tighter">✓✓</span>}
           </div>
         </div>
       </div>
