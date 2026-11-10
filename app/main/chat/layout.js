@@ -4,45 +4,14 @@ import ConversationList from "@/components/chat/ConversationList";
 
 export default function ChatLayout({ children }) {
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        height: "calc(100vh - 64px)",
-        width: "100%",
-        overflow: "hidden",
-        backgroundColor: "#0b0f19",
-        color: "#e5e7eb",
-        fontFamily: "sans-serif",
-      }}
-    >
-      {/* Left Container: All Friends / Conversation List (Fixed 350px width) */}
-      <aside
-        style={{
-          width: "350px",
-          minWidth: "350px",
-          maxWidth: "350px",
-          height: "100%",
-          borderRight: "1px solid #1e293b",
-          display: "flex",
-          flexDirection: "column",
-          backgroundColor: "#0b0f19",
-        }}
-      >
+    <div className="flex flex-row h-[calc(100vh-4rem)] w-full overflow-hidden bg-[#0b0f19] text-gray-200 font-sans">
+      {/* Left Container: All Friends / Conversation List */}
+      <aside className="w-[350px] min-w-[350px] max-w-[350px] h-full border-r border-slate-800 flex flex-col bg-[#0b0f19] shrink-0">
         <ConversationList />
       </aside>
 
       {/* Right Container: Active Chat Window */}
-      <main
-        style={{
-          flex: 1,
-          height: "100%",
-          display: "flex",
-          flexDirection: "column",
-          overflow: "hidden",
-          backgroundColor: "#0b0f19",
-        }}
-      >
+      <main className="flex-1 h-full flex flex-col overflow-hidden bg-[#0b0f19]">
         {children}
       </main>
     </div>

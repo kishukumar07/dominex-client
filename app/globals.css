@@ -1,22 +1,44 @@
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap");
-
+/* @import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap");
 @import "tailwindcss";
-
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    background-color: #0b0f19;
+    color: #f1f5f9;
+    margin: 0;
+  }
+}
 @import "./style/dominex.css";
 :root {
   --color-background: #ffffff;
   --color-foreground: #000000;
 }
-
 body {
   color: var(--color-foreground);
   background: var(--color-background);
   font-family: system-ui, sans-serif, Helvetica, Arial;
 }
+*/
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap");
+@import "tailwindcss";
+@import "./style/dominex.css" layer(base);
 
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    background-color: #0b0f19;
+    color: #f1f5f9;
+    margin: 0;
+    font-family: system-ui, sans-serif, Helvetica, Arial;
+  }
+}
 @media (prefers-color-scheme: dark) {
   body {
     color: var(--color-background);
     background: var(--color-foreground);
   }
-}
+} 
